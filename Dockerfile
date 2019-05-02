@@ -25,7 +25,7 @@ COPY scripts/* /usr/local/bin/
 RUN apk add -U --no-cache expect bash curl jq && \
   mkdir /config && \
   chown ${ALPINE_USER}:${ALPINE_USER} -R /config && \
-  chmod +x /usr/local/bin/start.sh /usr/local/bin/healthcheck.sh&& \
+  chmod +x /usr/local/bin/start.sh /usr/local/bin/healthcheck.sh && \
   rm -rf /var/cache/apk/*
 
 USER ${ALPINE_USER}
