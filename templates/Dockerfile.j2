@@ -1,10 +1,7 @@
 # Build Dynamic DNS Container For NoIP.com
-ARG IMAGE_USER=geoffh1977
-ARG IMAGE_NAME=alpine
-ARG IMAGE_VERSION=latest
 
 # Build NoIP Executable
-FROM geoffh1977/alpine:latest as builder
+FROM {{ dockerUser + "/" + buildImageName + ":" + buildImageVersion }} as builder
 USER root
 
 RUN apk add -U ca-certificates curl make gcc libc-dev && \
@@ -15,8 +12,8 @@ RUN apk add -U ca-certificates curl make gcc libc-dev && \
   cp noip2 /tmp/noip2
 
 # Final NoIp Container
-FROM ${IMAGE_USER}/${IMAGE_NAME}:${IMAGE_VERSION}
-LABEL maintainer="geoffh1977 <geoffh1977@gmail.com>"
+FROM {{ dockerUser + "/" + buildImageName + ":" + buildImageVersion }}
+LABEL maintainer="{{ dockerUser }} <{{ dockerUserEmail }}>"
 USER root
 
 COPY --from=builder /tmp/noip2 /usr/bin/
